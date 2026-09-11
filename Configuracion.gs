@@ -105,7 +105,7 @@ const PLANTILLAS_PERSONALIZABLES = {
       ALT_BANNER_HEADER: "Header Cuidado",
       // === PÁRRAFOS CONFIGURABLES ===
       PARRAFO_1: `Hay decisiones que se toman una sola vez, pero que lo acompañan todos los días. Su Seguro de <strong>${vars.tipoSeguro}</strong> es una de ellas.`,
-      PARRAFO_2: `Queremos recordarle que hoy vence la cuota de la financiación de su Seguro <strong>${vars.tipoSeguro}</strong> con <span style="color: #00A859; font-weight: bold;">su Entidad Financiera</span>. Al mantenerla al día, su protección continúa respaldándolo cuando más lo pueda necesitar.`,
+      PARRAFO_2: `Queremos recordarle que hoy vence la cuota de la financiación de su Seguro <strong>${vars.tipoSeguro}</strong> con <span style="color: #000000; font-weight: bold;">su Entidad Financiera</span>. Al mantenerla al día, su protección continúa respaldándolo cuando más lo pueda necesitar.`,
       PARRAFO_3: "", // Párrafo opcional (dejar en "" para no mostrar)
       // === BOTONES Y LLAMADOS A LA ACCIÓN ===
       TEXTO_PRE_BOTON: "Realizar el pago es fácil y toma solo unos minutos",
@@ -122,7 +122,7 @@ const PLANTILLAS_PERSONALIZABLES = {
       HERO_SUBTITULO: "y protegidos",
       ALT_BANNER_HEADER: "Continuemos juntos y protegidos",
       // === PÁRRAFOS CONFIGURABLES ===
-      PARRAFO_1: `Queremos seguir acompañándolo y ayudarle a mantener la protección que eligió para su Seguro de <strong>${vars.tipoSeguro}</strong>, financiada con <span style="color: #00A859; font-weight: bold;">su Entidad Financiera</span>.`,
+      PARRAFO_1: `Queremos seguir acompañándolo y ayudarle a mantener la protección que eligió para su Seguro de <strong>${vars.tipoSeguro}</strong>, financiada con <span style="color: #000000; font-weight: bold;">su Entidad Financiera</span>.`,
       PARRAFO_2: `Le recordamos que su financiación presenta un saldo pendiente de pago. Lo invitamos a realizar el pago lo antes posible para mantener vigente la cobertura de su seguro.`,
       PARRAFO_3: `Para facilitarle el proceso de pago, aquí encontrará la información de su financiación:`,
       // === BOTONES Y LLAMADOS A LA ACCIÓN ===
@@ -141,7 +141,7 @@ const PLANTILLAS_PERSONALIZABLES = {
       ALT_BANNER_HEADER: "Su Financiación ha sido cancelada",
       TEXTO_SIDEBAR_LEGAL: "",
       // === PÁRRAFOS CONFIGURABLES ===
-      PARRAFO_1: `Queremos informarle que, conforme a la autorización otorgada al momento de adquirir la financiación de su Seguro de <strong>${vars.tipoSeguro}</strong> con <span style="color: #00A859; font-weight: bold;">su Entidad Financiera</span>, y al no haberse registrado el pago dentro del plazo establecido, su financiación ha sido cancelada.`,
+      PARRAFO_1: `Queremos informarle que, conforme a la autorización otorgada al momento de adquirir la financiación de su Seguro de <strong>${vars.tipoSeguro}</strong> con <span style="color: #000000; font-weight: bold;">su Entidad Financiera</span>, y al no haberse registrado el pago dentro del plazo establecido, su financiación ha sido cancelada.`,
       PARRAFO_2: `Los imprevistos pueden ocurrir en cualquier momento. Queremos que usted y su familia sigan contando con la protección de su seguro. Realice el pago del saldo pendiente a través de nuestros canales y recupere el respaldo y la tranquilidad que le brinda <strong>su Compañía de Seguros</strong>.`,
       PARRAFO_3: "", // Párrafo opcional (dejar en "" para no mostrar)
       // === BOTONES Y LLAMADOS A LA ACCIÓN ===
@@ -161,7 +161,7 @@ const PLANTILLAS_PERSONALIZABLES = {
       // === PÁRRAFOS CONFIGURABLES ===
       PARRAFO_1: `Cuando adquirió su Seguro de <strong>${vars.tipoSeguro}</strong> tomó una decisión pensando en estar preparado para los momentos que no se pueden anticipar.`,
       PARRAFO_2: `Hoy queremos ayudarle a que esa decisión siga protegiéndolo.`,
-      PARRAFO_3: `Queremos evitar que el saldo pendiente de pago de su financiación con <span style="color: #00A859; font-weight: bold;">su Entidad Financiera</span> deje sin el respaldo que hoy protege su patrimonio.<br><br>Para facilitarle el proceso de pago, aquí encontrará la información de su financiación:`,
+      PARRAFO_3: `Queremos evitar que el saldo pendiente de pago de su financiación con <span style="color: #000000; font-weight: bold;">su Entidad Financiera</span> deje sin el respaldo que hoy protege su patrimonio.<br><br>Para facilitarle el proceso de pago, aquí encontrará la información de su financiación:`,
       // === BOTONES Y LLAMADOS A LA ACCIÓN ===
       TEXTO_PRE_BOTON: "",
       TEXTO_BOTON_PAGO: "Realizar mi pago ahora"

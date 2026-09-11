@@ -39,7 +39,7 @@ function construirBloqueDetalles(iconCredito, numeroCredito, iconSaldo, saldoFec
           <img src="${iconCredito}" alt="Icono Credito" width="38" height="38" style="display: block; pointer-events: none; -webkit-user-select: none; user-select: none;" oncontextmenu="return false;" ondragstart="return false;" border="0" />
         </td>
         <td align="left" valign="middle" style="padding-left: 12px;">
-          <span style="font-size: 13px; font-weight: bold; color: #00A859; display: block; line-height: 16px; font-family: Arial, sans-serif;">Número de crédito:</span>
+          <span style="font-size: 13px; font-weight: bold; color: #000000; display: block; line-height: 16px; font-family: Arial, sans-serif;">Número de crédito:</span>
           <span style="font-size: 14px; color: #222222; font-weight: bold; line-height: 18px; font-family: Arial, sans-serif;">${numeroCredito}</span>
         </td>
       </tr>
@@ -48,7 +48,7 @@ function construirBloqueDetalles(iconCredito, numeroCredito, iconSaldo, saldoFec
           <img src="${iconSaldo}" alt="Icono Saldo" width="38" height="38" style="display: block; pointer-events: none; -webkit-user-select: none; user-select: none;" oncontextmenu="return false;" ondragstart="return false;" border="0" />
         </td>
         <td align="left" valign="middle" style="padding-left: 12px;">
-          <span style="font-size: 13px; font-weight: bold; color: #00A859; display: block; line-height: 16px; font-family: Arial, sans-serif;">Saldo a la fecha:</span>
+          <span style="font-size: 13px; font-weight: bold; color: #000000; display: block; line-height: 16px; font-family: Arial, sans-serif;">Saldo a la fecha:</span>
           <span style="font-size: 14px; color: #222222; font-weight: bold; line-height: 18px; font-family: Arial, sans-serif;">${saldoFecha}</span>
         </td>
       </tr>
@@ -64,7 +64,7 @@ function construirBloqueParrafos(listaParrafos) {
     .filter(parrafo => parrafo && parrafo.trim() !== "")
     .map(parrafo => `
       <tr>
-        <td align="center" style="font-size: 13.5px; color: #555555; line-height: 22px; padding-bottom: 20px; font-family: Arial, sans-serif;">
+          <td align="center" style="font-size: 13.5px; color: #000000; line-height: 22px; padding-bottom: 20px; font-family: Arial, sans-serif;">
           ${parrafo}
         </td>
       </tr>
@@ -170,11 +170,11 @@ function registrarConfiguracionMapeadores() {
     // 1. CONFIGURACIÓN CENTRAL Y VARIABLES DE ESTILO PREDETERMINADAS
     Configuracion: {
       EstilosBase: {
-        COLOR_PRIMARIO: "#00A859",
-        COLOR_SECUNDARIO: "#FFDE59",
-        COLOR_TEXTO_BOTON: "#004D25",
+        COLOR_PRIMARIO: "#000000",
+        COLOR_SECUNDARIO: "#0000B8",
+        COLOR_TEXTO_BOTON: "#FFFFFF",
         FONDO_CUERPO: "#f4f4f4",
-        TEXTO_PRINCIPAL: "#2c3e50",
+        TEXTO_PRINCIPAL: "#000000",
         TEXTO_MUTED: "#6c757d",
         COLOR_BORDE: "#e9ecef"
       }
