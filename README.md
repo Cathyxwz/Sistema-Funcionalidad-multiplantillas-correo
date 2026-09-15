@@ -67,6 +67,8 @@ Plantillas/
 
 ## ⚙️ Configuración base
 
+> Importante: todas las imágenes deben ir en marca blanca, sin referencias a bancos ni marcas institucionales ajenas. Reemplaza los placeholders por tus imágenes reales del cliente y deja todo con un fondo blanco o transparente.
+
 ### 1. Crear el proyecto en Apps Script
 
 1. Abre [Google Apps Script](https://script.google.com/).

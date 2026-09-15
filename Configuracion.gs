@@ -58,14 +58,15 @@ const CONFIGURACION_BD = {
   },
 
   // Centralización de Activos Visuales e Imágenes Corporativas
+  // Mantener marca blanca: reemplaza las URLs por tus imágenes reales del cliente.
   ASSETS: {
-    LOGO_BOLIVAR: 'https://lh3.googleusercontent.com/d/1u_7n8xt5SIHBBHRgDAbWbxO1IwiP8DCP',
-    LOGO_DAVIVIENDA: 'https://lh3.googleusercontent.com/d/1bW9YHGKg4JwgRx860qvU7cFrb11FWZT3',
-    BANNER_DESTACADOS: 'https://lh3.googleusercontent.com/d/1fnzZtVWk2ROay8_ER0POlKai5o2-Q4ui',
-    BANNER_NOTIFICACION: 'https://lh3.googleusercontent.com/d/1ld-9pFzeyrcD79xP7zoSRDo4Z4BCtYEe',
-    ICON_CREDITO: 'https://lh3.googleusercontent.com/d/1mj6nJkkK30N-Hw8G6fQz8BcnyVsKiagn',
-    ICON_SALDO: 'https://lh3.googleusercontent.com/d/1E0JZxVqT6X6emAvhm3-BpZPdqgYxig1o',
-    ICON_VIGILADO: 'https://lh3.googleusercontent.com/d/1o0idkHh_XAlqi8UiaJmkXOYCc9jlWnCE'
+    LOGO_BOLIVAR: 'https://placehold.co/260x90/FFFFFF/222222?text=Coloca+tu+imagen+aqui',
+    LOGO_DAVIVIENDA: 'https://placehold.co/260x90/FFFFFF/222222?text=Coloca+tu+imagen+aqui',
+    BANNER_DESTACADOS: 'https://placehold.co/1200x380/FFFFFF/222222?text=Coloca+tu+imagen+aqui',
+    BANNER_NOTIFICACION: 'https://placehold.co/1200x380/FFFFFF/222222?text=Coloca+tu+imagen+aqui',
+    ICON_CREDITO: 'https://placehold.co/60x60/FFFFFF/222222?text=Icono',
+    ICON_SALDO: 'https://placehold.co/60x60/FFFFFF/222222?text=Icono',
+    ICON_VIGILADO: 'https://placehold.co/180x70/FFFFFF/222222?text=Marca+blanca'
   }
 };
 
@@ -81,10 +82,10 @@ const PLANTILLAS_PERSONALIZABLES = {
   // ------------------------------------------------------------------------
   plantillaDestacados: function (registroBD) {
     return {
-      TITULO_PESTANA: "Notificación Importante - Seguros Bolívar / Davivienda",
-      HERO_TITULO: "La tranquilidad también",
-      HERO_SUBTITULO: "se cuida",
-      ALT_BANNER_HEADER: "Header Cuidado",
+      TITULO_PESTANA: "Notificación importante",
+      HERO_TITULO: "Tu información",
+      HERO_SUBTITULO: "importante",
+      ALT_BANNER_HEADER: "Coloca tu imagen aquí",
       SALUDO_PREFIX: "Hola",
       
       // === CONFIGURACIÓN DINÁMICA DE VARIABLES (0, 1, 2, 3, 4 o N) ===
@@ -119,8 +120,8 @@ const PLANTILLAS_PERSONALIZABLES = {
       ],
 
       // === PÁRRAFOS CONFIGURABLES ===
-      PARRAFO_1: `Hay decisiones que se toman una sola vez, pero que lo acompañan todos los días. Su servicio contratado es una de ellas.`,
-      PARRAFO_2: `Queremos recordarle que hoy presenta un compromiso pendiente con el <span style="color: #00A859; font-weight: bold;">Banco Davivienda</span>. Al mantenerlo al día, su protección continúa respaldándolo.`,
+      PARRAFO_1: `Queremos recordarle que su información requiere atención oportuna para mantener el servicio activo y sin interrupciones.`,
+      PARRAFO_2: `Le invitamos a revisar su estado y realizar la gestión correspondiente en el canal oficial designado por la organización.`,
       PARRAFO_3: "",
 
       // === BOTONES Y LLAMADOS A LA ACCIÓN ===
@@ -138,18 +139,18 @@ const PLANTILLAS_PERSONALIZABLES = {
   // ------------------------------------------------------------------------
   plantillaNotificacion: function (registroBD) {
     return {
-      TITULO_PESTANA: "Aviso de Notificación - Seguros Bolívar",
+      TITULO_PESTANA: "Aviso de notificación",
       HERO_TITULO: "Notificación",
-      HERO_SUBTITULO: "importante de su cuenta",
-      ALT_BANNER_HEADER: "Notificación de estado",
+      HERO_SUBTITULO: "importante",
+      ALT_BANNER_HEADER: "Coloca tu imagen aquí",
       SALUDO_PREFIX: "Estimado(a)",
 
       // Esta plantilla por defecto no requiere caja de variables (0 variables)
       VARIABLES_DINAMICAS: [],
 
       // === PÁRRAFOS CONFIGURABLES ===
-      PARRAFO_1: `Queremos informarle el estado actual de su servicio contratado con el <span style="color: #00A859; font-weight: bold;">Banco Davivienda</span>.`,
-      PARRAFO_2: `Los imprevistos pueden ocurrir en cualquier momento. Queremos que usted y su familia sigan contando con nuestro respaldo. Realice el pago a través de nuestros canales oficiales.`,
+      PARRAFO_1: `Queremos informarle el estado actual de su servicio contratado y la importancia de atender esta solicitud en el tiempo indicado.`,
+      PARRAFO_2: `Los imprevistos pueden ocurrir en cualquier momento. Por eso, le pedimos revisar la información y seguir los canales oficiales establecidos por la organización.`,
       PARRAFO_3: "",
 
       // === BOTONES Y LLAMADOS A LA ACCIÓN ===

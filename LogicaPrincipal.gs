@@ -99,9 +99,9 @@ function registrarConfiguracionMapeadores() {
         return {
           TITULO_PESTANA: destacadosUser.TITULO_PESTANA,
           URL_LOGO_PRIMARIO: vars.logoBolivar,
-          ALT_LOGO_PRIMARIO: "Seguros Bolívar",
+          ALT_LOGO_PRIMARIO: "Coloca tu imagen aquí",
           URL_LOGO_SECUNDARIO: vars.logoDavivienda,
-          ALT_LOGO_SECUNDARIO: "Banco Davivienda",
+          ALT_LOGO_SECUNDARIO: "Coloca tu imagen aquí",
           URL_BANNER_HEADER: vars.bannerHeader,
           ALT_BANNER_HEADER: destacadosUser.ALT_BANNER_HEADER,
           HERO_TITULO: destacadosUser.HERO_TITULO,
@@ -133,9 +133,9 @@ function registrarConfiguracionMapeadores() {
         return {
           TITULO_PESTANA: destacadosUser.TITULO_PESTANA,
           URL_LOGO_PRIMARIO: vars.logoBolivar,
-          ALT_LOGO_PRIMARIO: "Seguros Bolívar",
+          ALT_LOGO_PRIMARIO: "Coloca tu imagen aquí",
           URL_LOGO_SECUNDARIO: vars.logoDavivienda,
-          ALT_LOGO_SECUNDARIO: "Banco Davivienda",
+          ALT_LOGO_SECUNDARIO: "Coloca tu imagen aquí",
           URL_BANNER_HEADER: vars.bannerHeader,
           ALT_BANNER_HEADER: destacadosUser.ALT_BANNER_HEADER,
           HERO_TITULO: destacadosUser.HERO_TITULO,
