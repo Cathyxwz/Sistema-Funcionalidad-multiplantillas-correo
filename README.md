@@ -1,191 +1,176 @@
-# ✉️ Sistema Multiplantillas para Notificaciones por Correo
+# ✉️ Sistema funcional de plantillas para correos
 
 [![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/apps-script) [![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](https://www.gmail.com/) [![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googleworkspace&logoColor=white)](https://sheets.google.com) [![HTML Email](https://img.shields.io/badge/HTML%20Email-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/docs/Web/HTML)
 
-Sistema para la **generación, personalización y envío masivo de notificaciones HTML**, desarrollado sobre **Google Apps Script, Google Sheets, Gmail y plantillas HTML compatibles con clientes de correo**.
+Sistema para generar, personalizar y enviar correos HTML desde Google Sheets usando Google Apps Script.
 
-El sistema permite seleccionar diferentes tipos de comunicación, consultar los registros de una hoja de cálculo, generar el contenido dinámico de cada correo, enviarlo mediante Gmail y actualizar el estado de cada fila para evitar envíos duplicados.
-
----
-
-## 📑 Índice
-
-- 🚀 [Funcionalidades](#-funcionalidades)
-- 🔄 [Flujo de Funcionamiento](#-flujo-de-funcionamiento)
-- 🧩 [Plantillas Disponibles](#-plantillas-disponibles)
-- 🗄️ [Estructura de Datos](#️-estructura-de-datos)
-- ⚙️ [Instalación y Configuración](#️-instalación-y-configuración)
-- 📧 [Envío de Correos](#-envío-de-correos)
-- 🧱 [Arquitectura del Código](#-arquitectura-del-código)
-- 📁 [Estructura del Proyecto](#-estructura-del-proyecto)
-- 🔐 [Validaciones y Seguridad](#-validaciones-y-seguridad)
-- 🛠️ [Pruebas](#️-pruebas)
-- 🌐 [Uso en Google Apps Script](#-uso-en-google-apps-script)
-- 🎯 [Resultado](#-resultado)
-- 🔧 [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+El flujo actual del proyecto está basado en dos plantillas principales, variables dinámicas y un renderizado centralizado que reemplaza marcadores del HTML según la fila del registro que se está procesando.
 
 ---
 
-## 🚀 Funcionalidades
+## 📌 ¿Qué hace este proyecto?
 
-### 📬 Generación de Correos Personalizados
-
-Cada correo se construye a partir de la información de una fila de Google Sheets. El sistema reemplaza marcadores como `%%SALUDO_NOMBRE%%`, `%%PARRAFO_1%%` y `%%URL_BOTON_PAGO%%` dentro de la plantilla HTML.
-
-Los textos, títulos, colores, banners y enlaces se gestionan de forma centralizada para que puedan modificarse sin alterar el motor principal.
-
-### 📨 Envío Masivo desde Google Sheets
-
-El proceso lee todas las filas de la hoja, valida la dirección de correo y envía únicamente los registros que todavía no aparecen como enviados.
-
-El envío utiliza `GmailApp.sendEmail()` con:
-
-- Cuerpo HTML.
-- Texto alternativo para clientes sin soporte HTML.
-- Nombre visible del remitente.
-- Copia (`cc`).
-- Copia oculta (`bcc`).
-- Dirección de respuesta (`replyTo`).
-- Alias autorizado (`from`).
-- Archivos adjuntos desde Google Drive.
-- Imágenes embebidas mediante `inlineImages`.
-- Opción `noReply` cuando está disponible para la cuenta.
-
-### 🔁 Control de Idempotencia
-
-Antes de enviar un correo, el sistema revisa la columna `Enviado`. Se omiten los registros cuyo valor sea:
-
-- `TRUE`
-- `SI`
-- `true`
-
-Después de un envío exitoso, la fila se actualiza con el valor configurado, por defecto `SI`.
-
-### 📊 Procesamiento por Lotes
-
-La información se lee una sola vez desde Google Sheets y los cambios se escriben en una sola operación al finalizar. Esto reduce llamadas a los servicios de Apps Script y mejora el rendimiento.
-
-### 🧾 Registro de Errores y Auditoría
-
-El sistema registra eventos de ejecución, correos enviados, filas omitidas y errores encontrados. La función de envío devuelve un resumen con:
-
-- Total de filas.
-- Correos enviados exitosamente.
-- Registros omitidos por haber sido enviados.
-- Cantidad de errores.
-- Detalle de los errores por fila.
+- Lee una hoja de Google Sheets y procesa cada fila.
+- Valida que la fila tenga una dirección de correo válida.
+- Revisa si el registro ya fue marcado como enviado.
+- Selecciona la plantilla activa configurada en `Configuracion.gs`.
+- Inserta texto, logotipos, banners, y bloques dinámicos de datos.
+- Envía el correo con Gmail.
+- Actualiza la columna `Enviado` para evitar reenvíos.
+- Registra eventos y errores para auditoría.
 
 ---
 
-## 🔄 Flujo de Funcionamiento
+## 🧩 Plantillas disponibles
 
-```mermaid
-flowchart TD
-    A[Iniciar proceso] --> B[Cargar configuración]
-    B --> C[Leer Google Sheets]
-    C --> D[Validar encabezados y cuota]
-    D --> E{¿Registro ya enviado?}
-    E -- Sí --> F[Omitir registro]
-    E -- No --> G[Validar correo]
-    G -- Inválido --> H[Registrar error]
-    G -- Válido --> I[Mapear datos]
-    I --> J[Seleccionar plantilla]
-    J --> K[Inyectar variables HTML]
-    K --> L[Enviar mediante Gmail]
-    L --> M[Actualizar estado en memoria]
-    M --> N[Guardar cambios en Sheets]
-    F --> E
-    H --> E
-    N --> O[Generar resumen]
-```
+Actualmente el sistema cuenta con estas dos plantillas:
 
----
+- `plantillaDestacados`
+- `plantillaNotificacion`
 
-## 🧩 Plantillas Disponibles
+Estas se configuran en `CONFIGURACION_BD.PLANTILLA_ACTIVA` dentro de `Configuracion.gs`.
 
-La plantilla activa se selecciona en `Configuracion.gs`, dentro de `CONFIGURACION_BD.PLANTILLA_ACTIVA`.
-
-| Clave | Uso | Archivo HTML |
-|---|---|---|
-| `financiacionVencimiento` | Recordatorio de una cuota que vence | `PlantillaNotifiacionGeneral.html` |
-| `financiacionPendientepago` | Aviso de saldo pendiente | `PlantillaNotifiacionGeneral.html` |
-| `financiacionCancelada` | Aviso de cancelación de financiación | `PlantillaFinanciacionCancelada.html` |
-| `evitePerdidaProteccion` | Aviso preventivo de pérdida de cobertura | `PlantillaNotifiacionGeneral.html` |
-
-> El nombre `PlantillaNotifiacionGeneral.html` conserva intencionalmente la escritura actual del archivo. Debe mantenerse exactamente igual al copiarlo a Google Apps Script.
-
-Los textos editables de cada comunicación se encuentran en `PLANTILLAS_PERSONALIZABLES` dentro de `Configuracion.gs`.
-
----
-
-## 🗄️ Estructura de Datos
-
-La hoja configurada debe tener una fila de encabezados y, debajo, los registros que se procesarán.
-
-| Encabezado | Descripción | Obligatorio |
-|---|---|---:|
-| `Nombre` | Nombre del destinatario | Recomendado |
-| `Tipo_De_Seguro` | Tipo de seguro contratado | Recomendado |
-| `Numero_Credito` | Número o identificador de financiación | Recomendado |
-| `Saldo_Fecha` | Saldo pendiente o valor a pagar | Recomendado |
-| `UrlPago` | URL del botón de pago | Recomendado |
-| `Correo` | Dirección de correo del destinatario | Sí |
-| `Enviado` | Estado de procesamiento | Sí |
-
-Si los encabezados de la hoja tienen nombres diferentes, deben actualizarse en `CONFIGURACION_BD.COLUMNAS`.
-
----
-
-## ⚙️ Instalación y Configuración
-
-### 1. Crear el proyecto
-
-1. Abre [Google Apps Script](https://script.google.com/).
-2. Crea un proyecto nuevo.
-3. Mantén activado el motor **V8**.
-4. Crea tres archivos de script y dos archivos HTML.
-
-### 2. Copiar los archivos
-
-Copia el contenido de estos archivos al proyecto de Apps Script:
-
-- `Configuracion.gs`
-- `LogicaPrincipal.gs`
-- `ServiciosCorreo.gs`
-- `PlantillaNotifiacionGeneral.html`
-- `PlantillaFinanciacionCancelada.html`
-
-El archivo `.vscode/settings.json` es opcional y solo sirve para mostrar colores en Visual Studio Code. No debe copiarse a Apps Script.
-
-### 3. Configurar Google Sheets
-
-En `Configuracion.gs`, revisa esta sección:
+Ejemplo:
 
 ```javascript
 const CONFIGURACION_BD = {
-  PLANTILLA_ACTIVA: "evitePerdidaProteccion",
+  PLANTILLA_ACTIVA: "plantillaDestacados",
   ID_HOJA: "ID_DE_TU_HOJA",
   NOMBRE_HOJA: "Datos"
 };
 ```
 
-Reemplaza:
+La estructura actual del proyecto usa los archivos HTML:
 
-- `PLANTILLA_ACTIVA` por una de las claves disponibles.
-- `ID_HOJA` por el ID real de tu hoja de cálculo.
-- `NOMBRE_HOJA` por el nombre exacto de la pestaña.
-
-El ID de la hoja es el texto que aparece entre `/d/` y `/edit` en su URL.
-
-### 4. Configurar activos visuales
-
-Los logos, banners e íconos se centralizan en `CONFIG.ASSETS`, ubicado en `LogicaPrincipal.gs`.
-
-Reemplaza las URLs de ejemplo por imágenes públicas y accesibles desde los clientes de correo. Para producción se recomienda usar URLs HTTPS estables y evitar imágenes temporales.
+- `PlantillaDestacados.html`
+- `PlantillaNotificacion.html`
 
 ---
 
-## 📧 Envío de Correos
+## 🗂️ Estructura real del proyecto
+
+```text
+Plantillas/
+├── .vscode/
+│   └── launch.json
+├── Configuracion.gs
+├── LogicaPrincipal.gs
+├── PlantillaDestacados.html
+├── PlantillaNotificacion.html
+├── README.md
+└── .git/
+```
+
+> El repositorio ya no usa `ServiciosCorreo.gs` ni las plantillas antiguas `PlantillaFinanciacionCancelada.html` / `PlantillaNotifiacionGeneral.html` en la versión actual.
+
+---
+
+## ⚙️ Configuración base
+
+### 1. Crear el proyecto en Apps Script
+
+1. Abre [Google Apps Script](https://script.google.com/).
+2. Crea un proyecto nuevo.
+3. Asegúrate de usar el motor **V8**.
+4. Crea dos archivos `.gs` y dos archivos `.html`.
+
+### 2. Copiar estos archivos
+
+- `Configuracion.gs`
+- `LogicaPrincipal.gs`
+- `PlantillaDestacados.html`
+- `PlantillaNotificacion.html`
+
+No copies el archivo `.vscode/launch.json` ni rutas locales de tu equipo a Apps Script.
+
+### 3. Configura la hoja de cálculo
+
+En `Configuracion.gs` se encuentra la sección principal:
+
+```javascript
+const CONFIGURACION_BD = {
+  PLANTILLA_ACTIVA: "plantillaDestacados",
+  ID_HOJA: "1MnvFyInIvL0VI9x0R4sxfE0DTeG2FHuuQbIg0pDftEI",
+  NOMBRE_HOJA: "Datos",
+
+  CONFIGURACION_CORREO: {
+    ASUNTO_CORREO: "Notificaciones Corporativas",
+    NO_REPLY: false,
+    REPLY_TO: ""
+  },
+
+  COLUMNAS: {
+    NOMBRE: "Nombre",
+    CORREO: "Correo",
+    ENVIADO: "Enviado",
+    URL_PAGO: "UrlPago"
+  },
+
+  ASSETS: {
+    LOGO_BOLIVAR: "https://...",
+    LOGO_DAVIVIENDA: "https://...",
+    BANNER_DESTACADOS: "https://...",
+    BANNER_NOTIFICACION: "https://...",
+    ICON_CREDITO: "https://...",
+    ICON_SALDO: "https://..."
+  }
+};
+```
+
+Debes reemplazar:
+
+- `PLANTILLA_ACTIVA` por `plantillaDestacados` o `plantillaNotificacion`.
+- `ID_HOJA` por el ID real del archivo de Sheets.
+- `NOMBRE_HOJA` por la pestaña exacta.
+- Las URLs de imágenes por URLs públicas y accesibles desde el cliente de correo.
+
+---
+
+## 🧱 Estructura de datos en Google Sheets
+
+La hoja debe tener una fila de encabezados con columnas como estas:
+
+| Encabezado | Descripción | Obligatorio |
+|---|---|---:|
+| `Nombre` | Nombre del destinatario | Recomendado |
+| `Correo` | Correo del destinatario | Sí |
+| `Enviado` | Estado del envío (`TRUE`, `FALSE`, `SI`, etc.) | Sí |
+| `UrlPago` | Link del botón de acción | Recomendado |
+| `Variable_1` | Valor configurable para bloque dinámico | Opcional |
+| `Variable_2` | Valor configurable para bloque dinámico | Opcional |
+
+Si tus columnas tienen otros nombres, actualizalas en `CONFIGURACION_BD.COLUMNAS`.
+
+---
+
+## 🔁 Variables dinámicas
+
+La configuración ofrece un bloque visual de variables configurables por plantilla.
+
+Ejemplo:
+
+```javascript
+VARIABLES_DINAMICAS: [
+  {
+    etiqueta: "Número de crédito:",
+    claveColumna: "Variable_1",
+    icono: CONFIGURACION_BD.ASSETS.ICON_CREDITO,
+    esMoneda: false
+  },
+  {
+    etiqueta: "Saldo a la fecha:",
+    claveColumna: "Variable_2",
+    icono: CONFIGURACION_BD.ASSETS.ICON_SALDO,
+    esMoneda: true
+  }
+]
+```
+
+Si dejas el arreglo vacío `[]`, este bloque no se renderiza.
+
+---
+
+## 📨 Cómo se envía el correo
 
 La función principal es:
 
@@ -193,202 +178,148 @@ La función principal es:
 ejecutarProcesoEnvioCorreos();
 ```
 
-También se puede enviar con opciones personalizadas:
+También puedes ejecutar con opciones personalizadas:
 
 ```javascript
 ejecutarProcesoEnvioCorreos({
-  plantillaClave: "evitePerdidaProteccion",
-  nombreRemitente: "Centro de Notificaciones",
+  plantillaClave: "plantillaDestacados",
   valorEstadoEnviado: "SI",
-  replyTo: "respuestas@empresa.com",
   cc: "supervisor@empresa.com",
   bcc: "auditoria@empresa.com",
+  replyTo: "respuestas@empresa.com",
   noReply: false
 });
 ```
 
-Para una prueba rápida se puede ejecutar:
+Para probar sin enviar a toda la base:
 
 ```javascript
 probarEnvioMasivoConPlantillaActiva();
 ```
 
-Antes de enviar a toda la base de datos, se recomienda probar con una copia de la hoja y con una sola fila de prueba.
-
 ---
 
-## 🧱 Arquitectura del Código
+## 🧪 Cómo probar renderizado
 
-### `Configuracion.gs`
-
-Contiene la configuración editable del sistema:
-
-- Conexión con Google Sheets.
-- Nombre de la pestaña.
-- Mapeo de encabezados.
-- Plantilla activa.
-- Textos y párrafos de cada comunicación.
-- Formateo de variables de negocio.
-
-### `LogicaPrincipal.gs`
-
-Contiene el motor central:
-
-- Registro de plantillas.
-- Mapeadores de datos.
-- Lectura de registros.
-- Selección de banners.
-- Construcción del bloque de financiación.
-- Inyección de variables en HTML.
-- Renderizado de plantillas.
-- Registro de logs.
-
-Funciones principales:
-
-- `obtenerRegistrosDesdeBD()`
-- `resolverRegistroBD()`
-- `obtenerPlantillaActiva()`
-- `renderizarPlantillaHTML()`
-- `probarRenderizado()`
-
-### `ServiciosCorreo.gs`
-
-Contiene el servicio de envío masivo:
-
-- Validación de cuota diaria.
-- Carga de adjuntos desde Drive.
-- Lectura por lotes.
-- Validación de destinatarios.
-- Prevención de reenvíos.
-- Envío mediante Gmail.
-- Actualización de estados.
-- Resumen de resultados.
-
-### Archivos HTML
-
-Las plantillas usan HTML basado en tablas para mejorar la compatibilidad con Gmail, Outlook y otros clientes de correo.
-
-Los valores dinámicos se escriben con el formato:
-
-```html
-%%NOMBRE_VARIABLE%%
-```
-
-Estos marcadores se reemplazan antes de enviar el correo.
-
----
-
-## 📁 Estructura del Proyecto
-
-```text
-Plantillas/
-├── .vscode/
-│   └── settings.json
-├── Configuracion.gs
-├── LogicaPrincipal.gs
-├── ServiciosCorreo.gs
-├── PlantillaFinanciacionCancelada.html
-├── PlantillaNotifiacionGeneral.html
-└── README.md
-```
-
----
-
-## 🔐 Validaciones y Seguridad
-
-El sistema incorpora las siguientes medidas:
-
-- Validación de existencia de la hoja configurada.
-- Validación de encabezados obligatorios.
-- Validación básica de direcciones de correo.
-- Control para no enviar registros procesados.
-- Escritura de estados únicamente después de un envío exitoso.
-- Uso de la cuota diaria disponible de Gmail.
-- Registro de errores por fila.
-- Separación entre configuración editable y lógica del motor.
-
-Recomendaciones para producción:
-
-- No publicar el ID de la hoja en repositorios públicos si el proyecto contiene información sensible.
-- Restringir el acceso al proyecto y a la hoja de cálculo.
-- Verificar los permisos de Gmail, Drive y Sheets antes del primer envío.
-- Configurar URLs HTTPS reales para logos, banners e íconos.
-- Probar primero con pocos destinatarios.
-
----
-
-## 🛠️ Pruebas
-
-### Probar el renderizado
-
-Ejecuta:
+Ejecuta la siguiente función en Apps Script:
 
 ```javascript
 probarRenderizado();
 ```
 
-Esta función toma el primer registro disponible, genera el HTML y registra la longitud del contenido generado.
+Esto toma el primer registro disponible, genera el HTML y registra la longitud final del contenido procesado.
 
-### Probar el envío masivo
+---
 
-Ejecuta:
+## 🧠 Estructura lógica del código
 
-```javascript
-probarEnvioMasivoConPlantillaActiva();
+### `Configuracion.gs`
+
+Contiene la configuración editable del sistema:
+
+- Plantilla activa.
+- ID y nombre de la hoja.
+- Mapeo de columnas.
+- Activos visuales.
+- Paleta de colores.
+- Texto y contenido editable de cada plantilla.
+- Arreglo de variables dinámicas.
+
+### `LogicaPrincipal.gs`
+
+Contiene el motor de render y envío:
+
+- `obtenerRegistrosDesdeBD()`
+- `resolverRegistroBD()`
+- `obtenerPlantillaActiva()`
+- `renderizarPlantillaHTML()`
+- `registrarConfiguracionMapeadores()`
+- `ejecutarProcesoEnvioCorreos()`
+- `probarRenderizado()`
+- `probarEnvioMasivoConPlantillaActiva()`
+
+Además, define el objeto global `ComponenteCorreo` con:
+
+- configuración base;
+- logs;
+- mapeadores de plantillas;
+- servicio de inyección de contenido HTML;
+- controlador de renderizado.
+
+---
+
+## 🧾 Variables que se inyectan en HTML
+
+Las plantillas manejan campos como estos dentro del HTML:
+
+```html
+%%TITULO_PESTANA%%
+%%URL_LOGO_PRIMARIO%%
+%%ALT_LOGO_PRIMARIO%%
+%%URL_LOGO_SECUNDARIO%%
+%%ALT_LOGO_SECUNDARIO%%
+%%URL_BANNER_HEADER%%
+%%ALT_BANNER_HEADER%%
+%%HERO_TITULO%%
+%%HERO_SUBTITULO%%
+%%SALUDO_NOMBRE%%
+%%BLOQUE_PARRAFOS%%
+%%BLOQUE_VARIABLES_DINAMICAS%%
+%%TEXTO_PRE_BOTON%%
+%%TEXTO_BOTON_PAGO%%
+%%URL_BOTON_PAGO%%
+%%FOOTER_SLOGAN_PARTE1%%
+%%FOOTER_SLOGAN_PARTE2%%
 ```
 
-Revisa el registro de ejecución para consultar el resumen y los posibles errores.
-
-### Errores comunes
-
-| Error | Causa probable | Solución |
-|---|---|---|
-| No se encontró la pestaña | `NOMBRE_HOJA` no coincide | Escribir el nombre exacto de la pestaña |
-| Columna obligatoria inexistente | Encabezado diferente | Ajustar `CONFIGURACION_BD.COLUMNAS` |
-| Plantilla no encontrada | Nombre HTML incorrecto | Mantener los nombres exactos de los archivos |
-| Correo inválido | Campo `Correo` vacío o incorrecto | Corregir la fila en Google Sheets |
-| Cuota diaria agotada | Límite de Gmail alcanzado | Esperar al siguiente periodo de cuota |
-| Imágenes no visibles | URL privada o temporal | Usar una URL HTTPS pública y estable |
+Todos estos marcadores se reemplazan automáticamente durante el render.
 
 ---
 
-## 🌐 Uso en Google Apps Script
+## 🔐 Validaciones y seguridad
 
-El proyecto es compatible con Google Apps Script siempre que:
+El sistema incluye:
 
-- Los archivos `.gs` se creen como archivos de script.
-- Los archivos `.html` se creen como archivos HTML.
-- Se conserven exactamente los nombres de las plantillas.
-- El proyecto use el motor V8.
-- La cuenta tenga permisos para Gmail, Drive y Google Sheets.
-- Se autoricen los servicios solicitados durante la primera ejecución.
+- validación de la hoja de cálculo;
+- validación de la pestaña y columnas obligatorias;
+- validación del correo electrónic o;
+- control para no reenviar filas ya marcadas como enviadas;
+- escritura de estado solo cuando el correo fue exitoso;
+- control de cuota diaria de Gmail;
+- logging de errores por fila.
 
-No se deben copiar las rutas de carpetas locales ni el archivo `.vscode/settings.json` al proyecto de Apps Script.
+Recomendaciones:
 
----
-
-## 🎯 Resultado
-
-El sistema permite administrar varias comunicaciones desde una misma base de datos y una misma infraestructura de Apps Script.
-
-Su diseño facilita:
-
-- Cambiar textos sin modificar el motor.
-- Seleccionar la plantilla desde configuración.
-- Reutilizar el proceso de envío.
-- Mantener trazabilidad de cada registro.
-- Evitar envíos duplicados.
-- Escalar nuevas plantillas mediante nuevos mapeadores y archivos HTML.
+- usar una hoja de prueba antes del envío real;
+- mantener privadas las URLs de imágenes y el ID del archivo;
+- verificar permisos de Gmail, Sheets y Drive;
+- usar HTTPS en imágenes y logotipos.
 
 ---
 
-## 🔧 Tecnologías Utilizadas
+## 🚀 Modo de uso recomendado
 
-- Google Apps Script.
-- JavaScript ES6+.
-- Google Sheets.
-- GmailApp y MailApp.
-- DriveApp.
-- HtmlService.
-- HTML y CSS para correo electrónico.
-- Git y GitHub.
+1. Define la plantilla en `CONFIGURACION_BD.PLANTILLA_ACTIVA`.
+2. Ajusta los nombres de las columnas y los textos en `Configuracion.gs`.
+3. Revisa que la hoja tenga `Correo` y `Enviado`.
+4. Ejecuta `probarRenderizado()` para validar el HTML.
+5. Ejecuta `probarEnvioMasivoConPlantillaActiva()` en pruebas.
+6. Si todo funciona, ejecuta `ejecutarProcesoEnvioCorreos()` con la base real.
+
+---
+
+## 🔧 Tecnologías usadas
+
+- Google Apps Script
+- JavaScript ES6+
+- Google Sheets
+- GmailApp
+- HtmlService
+- HTML y CSS para correos
+- Git y GitHub
+
+---
+
+## 📝 Nota importante
+
+La versión actual del proyecto ya no corresponde a las plantillas y nombres antiguos del repositorio inicial. Esta documentación refleja el código que está en este workspace y la lógica que realmente está implementada en `Configuracion.gs` y `LogicaPrincipal.gs`.

@@ -48,7 +48,6 @@
       text-decoration: none !important;
       display: block !important;
     }
-    /* PREVENCIÓN DE INVERSIÓN FORZADA EN MÓVILES (DARK MODE) */
     @media (prefers-color-scheme: dark) {
       .body-bg { background-color: #ffffff !important; }
       .dark-text-white { color: #ffffff !important; }
@@ -84,7 +83,7 @@
               </table>
             </td>
           </tr>
-          <!-- 2 Y 3. HERO BANNER CON RENGLONES COMPACTADOS -->
+          <!-- 2 Y 3. HERO BANNER -->
           <tr>
             <td align="center" width="600" height="380" background="%%URL_BANNER_HEADER%%" style="background-image: url('%%URL_BANNER_HEADER%%'); background-position: top center; background-repeat: no-repeat; background-size: cover; height: 380px; padding: 0; border: 0; text-align: center; vertical-align: bottom;">
               <!--[if gte mso 9]>
@@ -96,19 +95,15 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border: 0;">
                   <tr>
                     <td align="center" style="padding-top: 180px; padding-bottom: 15px; padding-left: 20px; padding-right: 20px; border: 0;">
-                      <!-- TEXTO LEGAL SECUNDARIO -->
-                        <div style="font-size: 10px; color: #000000; font-family: Arial, sans-serif; margin-bottom: 4px;">
-                        %%TEXTO_SIDEBAR_LEGAL%%
-                      </div>
                       <!-- TÍTULO PRINCIPAL SUPERPUESTO -->
-                      <span style="font-size: 26px; font-weight: bold; color: #000000; font-style: italic; display: block; font-family: Arial, sans-serif; letter-spacing: 0.5px; line-height: 1.0;">
+                      <span class="dark-text-white" style="font-size: 26px; font-weight: bold; color: #ffffff; font-style: italic; display: block; font-family: Arial, sans-serif; letter-spacing: 0.5px; line-height: 1.0;">
                         %%HERO_TITULO%%
                       </span>
-                      <!-- SUBTÍTULO CON CAJA DE COLOR SUPERPUESTO (ESPACIADO COMPACTO) -->
+                      <!-- SUBTÍTULO CON CAJA DE COLOR -->
                       <table border="0" cellpadding="0" cellspacing="0" align="center" style="margin-top: 2px; border: 0;">
                         <tr>
-                          <td align="center" bgcolor="%%COLOR_SECUNDARIO%%" style="background-color: #0000B8; padding: 5px 18px; border-radius: 4px; border: 0;">
-                            <span style="font-size: 18px; font-weight: bold; color: #ffffff; font-style: italic; font-family: Arial, sans-serif; line-height: 1.0; display: block;">
+                          <td align="center" bgcolor="%%COLOR_SECUNDARIO%%" style="padding: 5px 18px; border-radius: 4px; border: 0;">
+                            <span style="font-size: 18px; font-weight: bold; color: %%COLOR_PRIMARIO%%; font-style: italic; font-family: Arial, sans-serif; line-height: 1.0; display: block;">
                               %%HERO_SUBTITULO%%
                             </span>
                           </td>
@@ -130,29 +125,21 @@
               <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border: 0;">
                 <!-- SALUDO DINÁMICO -->
                 <tr>
-                  <td align="center" style="font-size: 20px; font-weight: bold; color: #000000; color: %%COLOR_PRIMARIO%%; padding-bottom: 18px; font-family: Arial, sans-serif; border: 0;">
+                  <td align="center" style="font-size: 20px; font-weight: bold; color: %%COLOR_PRIMARIO%%; padding-bottom: 18px; font-family: Arial, sans-serif; border: 0;">
                     %%SALUDO_NOMBRE%%
                   </td>
                 </tr>
-                <!-- PÁRRAFO 1 -->
-                <tr>
-                  <td align="center" style="font-size: 13.5px; color: #000000; line-height: 22px; padding-bottom: 20px; font-family: Arial, sans-serif; border: 0;">
-                    %%PARRAFO_1%%
-                  </td>
-                </tr>
-                <!-- PÁRRAFO 2 -->
-                <tr>
-                  <td align="center" style="font-size: 13.5px; color: #000000; line-height: 22px; padding-bottom: 30px; font-family: Arial, sans-serif; border: 0;">
-                    %%PARRAFO_2%%
-                  </td>
-                </tr>
-                <!-- BOTÓN DE ACCIÓN (CALL TO ACTION PRINCIPAL) -->
+                <!-- INYECCIÓN DINÁMICA DE PÁRRAFOS -->
+                %%BLOQUE_PARRAFOS%%
+                <!-- BLOQUE DINÁMICO DE VARIABLES EDITABLES (0, 1, 2, 3, N) -->
+                %%BLOQUE_VARIABLES_DINAMICAS%%
+                <!-- BOTÓN DE ACCIÓN -->
                 <tr>
                   <td align="center" style="padding-bottom: 30px; border: 0;">
                     <table border="0" cellpadding="0" cellspacing="0" align="center" style="border: 0;">
                       <tr>
-                        <td align="center" bgcolor="%%COLOR_SECUNDARIO%%" style="background-color: #0000B8; border-radius: 25px; border: 0;">
-                          <a href="%%URL_BOTON_PAGO%%" target="_blank" style="font-size: 14px; font-family: Arial, sans-serif; color: #ffffff; color: %%COLOR_TEXTO_BOTON%%; font-weight: bold; text-decoration: none; border-radius: 25px; padding: 12px 32px; display: inline-block;">
+                        <td align="center" bgcolor="%%COLOR_SECUNDARIO%%" style="border-radius: 25px; border: 0;">
+                          <a href="%%URL_BOTON_PAGO%%" target="_blank" style="font-size: 14px; font-family: Arial, sans-serif; color: %%COLOR_TEXTO_BOTON%%; font-weight: bold; text-decoration: none; border-radius: 25px; padding: 12px 32px; display: inline-block;">
                             %%TEXTO_BOTON_PAGO%%
                           </a>
                         </td>
@@ -165,13 +152,13 @@
                   <td align="center" style="padding-top: 10px; padding-bottom: 20px; border: 0;">
                     <table border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse; border: 0;">
                       <tr>
-                        <td bgcolor="%%COLOR_PRIMARIO%%" style="background-color: #0000B8; padding: 6px 14px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; border: 0;">
+                        <td bgcolor="%%COLOR_PRIMARIO%%" style="padding: 6px 14px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; border: 0;">
                           <span class="dark-text-white" style="font-size: 14px; font-weight: bold; color: #ffffff; font-style: italic; font-family: Arial, sans-serif; display: block; line-height: 1;">
                             %%FOOTER_SLOGAN_PARTE1%%
                           </span>
                         </td>
-                        <td bgcolor="#ffffff" style="background-color: #ffffff; padding: 6px 14px 6px 8px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border: 1px solid #f0f0f0; border-left: none;">
-                          <span style="font-size: 14px; font-weight: bold; color: #000000; color: %%COLOR_PRIMARIO%%; font-style: italic; font-family: Arial, sans-serif; display: block; line-height: 1;">
+                        <td bgcolor="#ffffff" style="padding: 6px 14px 6px 8px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; border: 1px solid #f0f0f0; border-left: none;">
+                          <span style="font-size: 14px; font-weight: bold; color: %%COLOR_PRIMARIO%%; font-style: italic; font-family: Arial, sans-serif; display: block; line-height: 1;">
                             %%FOOTER_SLOGAN_PARTE2%%
                           </span>
                         </td>
@@ -182,7 +169,7 @@
                 <!-- MARCA LEGAL / LOGO OFICIAL (PIE DE PÁGINA) -->
                 <tr>
                   <td align="center" style="padding-top: 15px; border-top: 1px solid #eeeeee;">
-                    <img src="%%URL_ICONO_VIGILADO%%" alt="Entidad Regulada" width="140" style="display: block; width: 140px; max-width: 140px; height: auto; border: 0; outline: none; text-decoration: none; margin: 0 auto;" border="0" />
+                    <img src="https://lh3.googleusercontent.com/d/1o0idkHh_XAlqi8UiaJmkXOYCc9jlWnCE" alt="Vigilado Superintendencia Financiera de Colombia" width="140" style="display: block; width: 140px; max-width: 140px; height: auto; border: 0; outline: none; text-decoration: none; margin: 0 auto;" border="0" />
                   </td>
                 </tr>
               </table>
